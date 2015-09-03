@@ -13,12 +13,8 @@ var AppModel = Backbone.Model.extend({
     getting called from the window (unless we override it, as we do here). */
 
 
-    params.library.on('play', function(song) {
-      this.set('currentSong', song);
-    }, this);
 
     params.library.on('removeFromQueue', function(song) {
-      debugger
       this.get('songQueue').remove(song);
     }, this);
 
@@ -27,12 +23,14 @@ var AppModel = Backbone.Model.extend({
       this.get('songQueue').add(song);
       if(!this.get('currentSong').get('title')) {
         this.set('currentSong', song);
+        this.get('currentSong').set('playCount', this.get('currentSong').get('playCount') + 1);
       }
     }, this);
     params.library.on('dequeue', function() {
       this.get('songQueue').remove(this.get('currentSong'));
       if (this.get('songQueue').length) {
         this.set('currentSong', this.get('songQueue').at(0));
+        this.get('currentSong').set('playCount', this.get('currentSong').get('playCount') + 1);
       }
     }, this);
   }

@@ -12,7 +12,7 @@ var SongQueueEntryView = Backbone.View.extend({
     },
     'click': function(){
       //model points to song model
-      debugger
+      
       this.model.removeFromQueue();
       
     }
