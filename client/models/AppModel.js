@@ -17,7 +17,21 @@ var AppModel = Backbone.Model.extend({
       this.set('currentSong', song);
     }, this);
     params.library.on('enqueue', function(song) {
+      //TODO fix bug involving emptying a queue and then placing a new song [new song doesn't autoplay]
       this.get('songQueue').add(song);
+      if(!this.get('currentSong').get('title')) {
+        this.set('currentSong', song);
+      }
+    }, this);
+    params.library.on('dequeue', function() {
+      var test = this.get('currentSong');
+      debugger
+      console.log("Yes indeed!!");
+      this.get('songQueue').remove(this.get('currentSong'));
+      if (this.get('songQueue').length) {
+        debugger;
+        this.set('currentSong', this.get('songQueue').at(0));
+      }
     }, this);
   }
 
