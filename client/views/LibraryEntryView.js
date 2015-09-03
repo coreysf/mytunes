@@ -7,6 +7,7 @@ var LibraryEntryView = Backbone.View.extend({
 
   events: {
     'click': function() {
+      //Goes to song model
       this.model.enqueue(this.model);
     }
   },
